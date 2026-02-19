@@ -1,0 +1,42 @@
+plugins {
+    id 'java-gradle-plugin'
+}
+
+group = 'com.example'
+version = '0.1.0'
+
+java {
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(21)
+    }
+}
+
+repositories {
+    gradlePluginPortal()
+    mavenCentral()
+}
+
+dependencies {
+    implementation 'org.flywaydb:flyway-gradle-plugin:11.17.0'
+    implementation 'nu.studer:gradle-jooq-plugin:10.1'
+
+    implementation 'org.testcontainers:testcontainers:1.20.6'
+    implementation 'org.testcontainers:mariadb:1.20.6'
+    implementation 'org.testcontainers:mysql:1.20.6'
+    implementation 'org.testcontainers:postgresql:1.20.6'
+
+    implementation 'org.mariadb.jdbc:mariadb-java-client:3.5.1'
+    implementation 'com.mysql:mysql-connector-j:9.3.0'
+    implementation 'org.postgresql:postgresql:42.7.5'
+}
+
+gradlePlugin {
+    plugins {
+        testcontainersFlywayJooq {
+            id = 'com.example.testcontainers-flyway-jooq'
+            implementationClass = 'com.example.gradle.TestcontainersFlywayJooqPlugin'
+            displayName = 'Testcontainers Flyway jOOQ Plugin'
+            description = 'Runs Flyway and jOOQ against an ephemeral Testcontainers relational database.'
+        }
+    }
+}
